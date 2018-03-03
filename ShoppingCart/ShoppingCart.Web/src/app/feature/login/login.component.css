@@ -1,0 +1,21 @@
+.main-container{
+  width: 100%;
+  /* background-color: aqua; */
+}
+
+.header{
+  min-height: 100px;
+  background-color: blueviolet;
+}
+
+.content {
+  margin-top: 5px;
+  min-height: 300px;
+  background-color:beige;
+}
+
+.footer{
+ min-height: 100px;
+ margin-top: 5px;
+ background-color:blue;
+}
