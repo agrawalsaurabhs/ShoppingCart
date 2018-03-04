@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 
 namespace ShoppingCart.API
@@ -16,10 +17,13 @@ namespace ShoppingCart.API
                 .UseContentRoot(Directory.GetCurrentDirectory())
                 .UseIISIntegration()
                 .UseStartup<Startup>()
-                .UseApplicationInsights()
                 .Build();
 
             host.Run();
+
+            //WebHost.CreateDefaultBuilder(args)
+            //    .UseStartup<Startup>()
+            //    .Build();
         }
     }
 }
