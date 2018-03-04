@@ -6,11 +6,14 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using ShoppingCart.Core.Interface;
 using ShoppingCart.Data;
+using ShoppingCart.Services;
 
 namespace ShoppingCart.API
 {
@@ -20,7 +23,17 @@ namespace ShoppingCart.API
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            //Registering services for Identity framework
+            services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<ShoppingDbContext>().AddDefaultTokenProviders();
+
+            //Registering custom services
+            services.AddTransient<IAuthenticationService, AuthenticationService>();
+            services.AddTransient<IAuthenticationRepository, AuthenticationRepository>();
+
+            //Registering services for MVC
             services.AddMvc();
+
+            //Registering services for Db Context
             services.AddDbContext<ShoppingDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
         }
 
@@ -29,23 +42,26 @@ namespace ShoppingCart.API
         {
             loggerFactory.AddConsole();
 
-            var builder = new ConfigurationBuilder()
-                .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile("appsettings.json");
-
+            //Setting up the configuration class
+            var builder = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile("appsettings.json");
             Configuration = builder.Build();
+
 
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            //adding MVC in pipeline with default route
             app.UseMvcWithDefaultRoute();
+
+            //This will run last if none of the middlewares are able to handle the request
             app.Run(async (context) =>
             {
                 await context.Response.WriteAsync("Hello World!");
             });
         }
 
-        public IConfigurationRoot Configuration { get; set; }
+        private IConfigurationRoot Configuration { get; set; }
     }
 }

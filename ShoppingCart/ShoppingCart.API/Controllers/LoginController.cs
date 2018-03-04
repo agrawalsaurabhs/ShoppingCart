@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using ShoppingCart.Core.Interface;
 
 namespace ShoppingCart.API.Controllers
 {
@@ -11,9 +12,15 @@ namespace ShoppingCart.API.Controllers
     [Route("api/Login")]
     public class LoginController : Controller
     {
-        public bool Login(string username, string password)
+        private readonly IAuthenticationService _authenticationService;
+
+        public LoginController(IAuthenticationService authenticationService)
         {
-            return true;
+            _authenticationService = authenticationService;
+        }
+        public async Task<bool> Login(string username, string password)
+        {
+            return await _authenticationService.Authenticate(username, password);
         }
     }
 }
