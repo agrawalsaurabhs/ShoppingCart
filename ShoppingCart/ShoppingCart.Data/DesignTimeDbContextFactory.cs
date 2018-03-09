@@ -1,25 +1,28 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.IO;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration;
-using ShoppingCart.Data;
 
-namespace ShoppingCart.API
+namespace ShoppingCart.Data
 {
     public class DesignTimeDbContextFactory : IDesignTimeDbContextFactory<ShoppingDbContext>
     {
+        private readonly IConfiguration _configuration;
+
+        public DesignTimeDbContextFactory(IConfiguration configuration)
+        {
+            _configuration = configuration;
+        }
+
+        public DesignTimeDbContextFactory()
+        {
+            
+        }
         public ShoppingDbContext CreateDbContext(string[] args)
         {
-            IConfigurationRoot configuration = new ConfigurationBuilder()
-                .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile("appsettings.json")
-                .Build();
             var builder = new DbContextOptionsBuilder<ShoppingDbContext>();
-            var connectionString = configuration.GetConnectionString("DefaultConnection");
+            var connectionString =
+                "Server=.;Database=ShoppingCart;Trusted_Connection=True;MultipleActiveResultSets=true";
             builder.UseSqlServer(connectionString);
             return new ShoppingDbContext(builder.Options);
         }

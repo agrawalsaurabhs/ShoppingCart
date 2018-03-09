@@ -11,8 +11,8 @@ using System;
 namespace ShoppingCart.Data.Migrations
 {
     [DbContext(typeof(ShoppingDbContext))]
-    [Migration("20180304085519_Users")]
-    partial class Users
+    [Migration("20180304150144_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
