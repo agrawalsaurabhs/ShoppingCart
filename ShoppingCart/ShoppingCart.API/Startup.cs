@@ -32,9 +32,9 @@ namespace ShoppingCart.API
             //Registering services for Db Context
             services.AddDbContext<ShoppingDbContext>(options => options.UseSqlServer
                 (_configuration.GetConnectionString("DefaultConnection")));
-            
+
             //Registering services for Identity framework
-            //services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<ShoppingDbContext>().AddDefaultTokenProviders();
+            services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<ShoppingDbContext>().AddDefaultTokenProviders();
 
             //Registering custom services
             services.AddTransient<IAuthenticationService, AuthenticationService>();

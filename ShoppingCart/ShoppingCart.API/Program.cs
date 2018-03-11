@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace ShoppingCart.API
 {
@@ -12,7 +13,7 @@ namespace ShoppingCart.API
     {
         public static void Main(string[] args)
         {
-            BuildWebHost(args).Run();
+            BuildWebHost(args).MigrateDatabase().Run();
         }
 
         public static IWebHost BuildWebHost(string[] args) =>
