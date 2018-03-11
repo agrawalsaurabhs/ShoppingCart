@@ -13,6 +13,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using ShoppingCart.Core.Interface;
 using ShoppingCart.Data;
+using ShoppingCart.Data.SeedData;
 using ShoppingCart.Services;
 
 namespace ShoppingCart.API
@@ -39,6 +40,7 @@ namespace ShoppingCart.API
             //Registering custom services
             services.AddTransient<IAuthenticationService, AuthenticationService>();
             services.AddTransient<IAuthenticationRepository, AuthenticationRepository>();
+            services.AddTransient<ShoppingCartDbSeeder, ShoppingCartDbSeeder>();
 
             //Registering services for MVC
             services.AddMvc();
