@@ -11,6 +11,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using ShoppingCart.Core.Domain;
 using ShoppingCart.Core.Interface;
 using ShoppingCart.Data;
 using ShoppingCart.Data.SeedData;
@@ -35,7 +36,7 @@ namespace ShoppingCart.API
                 (_configuration.GetConnectionString("DefaultConnection")));
 
             //Registering services for Identity framework
-            services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<ShoppingDbContext>().AddDefaultTokenProviders();
+            services.AddIdentity<ApplicationUser, IdentityRole>().AddEntityFrameworkStores<ShoppingDbContext>().AddDefaultTokenProviders();
 
             //Registering custom services
             services.AddTransient<IAuthenticationService, AuthenticationService>();

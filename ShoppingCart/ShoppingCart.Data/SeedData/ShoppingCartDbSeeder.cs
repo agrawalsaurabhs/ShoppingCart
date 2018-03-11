@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using ShoppingCart.Core.Domain;
 
 namespace ShoppingCart.Data.SeedData
 {
@@ -12,9 +13,9 @@ namespace ShoppingCart.Data.SeedData
     {
         private readonly ShoppingDbContext _dbContext;
         private readonly RoleManager<IdentityRole> _roleManager;
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public ShoppingCartDbSeeder(ShoppingDbContext dbContext, RoleManager<IdentityRole> roleManager, UserManager<IdentityUser> userManager)
+        public ShoppingCartDbSeeder(ShoppingDbContext dbContext, RoleManager<IdentityRole> roleManager, UserManager<ApplicationUser> userManager)
         {
             _dbContext = dbContext;
             _roleManager = roleManager;
@@ -40,7 +41,7 @@ namespace ShoppingCart.Data.SeedData
                 }
 
                 // Initialize default user
-                IdentityUser admin = new IdentityUser
+                ApplicationUser admin = new ApplicationUser
                 {
                     Email = "admin@bcg.com",
                     UserName = "admin"

@@ -9,7 +9,7 @@ using ShoppingCart.Core.Domain;
 
 namespace ShoppingCart.Data
 {
-    public class ShoppingDbContext : IdentityDbContext<IdentityUser>
+    public class ShoppingDbContext : IdentityDbContext<ApplicationUser>
     {
         public ShoppingDbContext(DbContextOptions<ShoppingDbContext> options) : base(options)
         {
