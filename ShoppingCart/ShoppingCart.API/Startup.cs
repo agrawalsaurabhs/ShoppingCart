@@ -35,8 +35,12 @@ namespace ShoppingCart.API
             services.AddDbContext<ShoppingDbContext>(options => options.UseSqlServer
                 (_configuration.GetConnectionString("DefaultConnection")));
 
+
             //Registering services for Identity framework
-            services.AddIdentity<ApplicationUser, IdentityRole>().AddEntityFrameworkStores<ShoppingDbContext>().AddDefaultTokenProviders();
+            services.AddIdentity<ApplicationUser, IdentityRole>(cfg =>
+            {
+                cfg.User.RequireUniqueEmail = true;
+            }).AddEntityFrameworkStores<ShoppingDbContext>().AddDefaultTokenProviders(); ;
 
             //Registering custom services
             services.AddTransient<IAuthenticationService, AuthenticationService>();
@@ -65,7 +69,7 @@ namespace ShoppingCart.API
             }
 
             app.UseStaticFiles();
-
+            app.UseAuthentication();
             //adding MVC in pipeline with default route
             app.UseMvcWithDefaultRoute();
 
